@@ -18,7 +18,6 @@ from django.urls import path
 from django.conf.urls import handler400, handler403, handler500, handler404
 
 urlpatterns = [
-
     path('admin/', admin.site.urls),
 ]
 handler400 = 'error_handlers.views.error_400'
