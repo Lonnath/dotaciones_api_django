@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,12 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'corsheaders',
 
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 MIDDLEWARE = [    
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,13 +61,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
+
 ROOT_URLCONF = 'dotaciones.urls'
 
 TEMPLATES = [
@@ -100,6 +101,9 @@ DATABASES = {
     }
 }
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -131,6 +135,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 MIDDLEWARE_CLASSES = (
     # Simplified static file serving.
