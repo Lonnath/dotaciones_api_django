@@ -9,9 +9,10 @@ from .models import Dotaciones
 import json
 @csrf_exempt
 def dotaciones(request):
-    dotaciones_all = serializers.serialize("json", Dotaciones.objects.all())
+    dotaciones_all = Dotaciones.objects.all().values()
+    list_out = [salida for salida in dotaciones_all]
     if dotaciones_all:
-        return JsonResponse({'CODE':1, 'MESSAGE':'OK.', 'DATA' : dotaciones_all})
+        return JsonResponse({'CODE':1, 'MESSAGE':'OK.', 'DATA' : list_out})
     else:
         return JsonResponse({'CODE':1, 'MESSAGE':'No existen registros.', 'DATA': ''})
 @csrf_exempt
