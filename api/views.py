@@ -46,7 +46,6 @@ def asignar_dotacion(request):
         maquina = Dotaciones.objects.get(codigo=codigo)
 
         if maquina:
-            print(maquina.fecha_asignado)
             if maquina.fecha_asignado == None:
                 maquina.fecha_asignado = datetime.datetime.now().strftime("%Y-%m-%d")
                 maquina.empleado_asignado = empleado_nombre
