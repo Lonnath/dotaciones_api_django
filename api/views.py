@@ -9,7 +9,7 @@ from .models import Dotaciones
 import json
 @csrf_exempt
 def dotaciones(request):
-    dotaciones_all = Dotaciones.objects.all().values()
+    dotaciones_all = Dotaciones.objects.order_by('-fecha_asignado').values()
     list_out = [salida for salida in dotaciones_all]
     if dotaciones_all:
         return JsonResponse({'CODE':1, 'MESSAGE':'Información consultada con exito.', 'DATA' : list_out})
@@ -38,8 +38,8 @@ def insertar_dotacion(request):
 def asignar_dotacion(request):
     jd = json.loads(request.body)
     if jd:
-        codigo = jd['codigo'] if 'codigo' in jd else None
-        empleado_nombre = jd['empleado_nombre'] if 'empleado_nombre' in jd else None
+        codigo = jd['codigo'].lower() if 'codigo' in jd else None
+        empleado_nombre = jd['empleado_nombre'].lower() if 'empleado_nombre' in jd else None
         empleado_email = jd['empleado_email'] if 'empleado_email' in jd else None
         
         if codigo == None or empleado_nombre == None or empleado_email == None:
