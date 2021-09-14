@@ -9,9 +9,10 @@ from .models import Dotaciones
 import json
 @csrf_exempt
 def dotaciones(request):
-    dotaciones_all = serializers.serialize("json", Dotaciones.objects.all())
+    dotaciones_all = Dotaciones.objects.all().values()
+    list_out = [salida for salida in dotaciones_all]
     if dotaciones_all:
-        return JsonResponse({'CODE':1, 'MESSAGE':'OK.', 'DATA' : dotaciones_all})
+        return JsonResponse({'CODE':1, 'MESSAGE':'Información consultada con exito.', 'DATA' : list_out})
     else:
         return JsonResponse({'CODE':1, 'MESSAGE':'No existen registros.', 'DATA': ''})
 @csrf_exempt
@@ -27,7 +28,7 @@ def insertar_dotacion(request):
         val_id = list(Dotaciones.objects.filter(codigo=codigo))
         if not val_id:
             insert_method = Dotaciones(codigo, nombre, tipo, sistema_operativo).save()
-            return JsonResponse({'CODE':1, 'MESSAGE':'Prueba Insercion', 'DATA':jd})
+            return JsonResponse({'CODE':1, 'MESSAGE':'Inserción realizada con exito', 'DATA': ''})
         else:
             return JsonResponse({'CODE':2, 'MESSAGE':'Maquina ya registrada.', 'DATA':''})
         
@@ -51,7 +52,7 @@ def asignar_dotacion(request):
                 maquina.empleado_asignado = empleado_nombre
                 maquina.empleado_email = empleado_email
                 maquina.save()
-                return JsonResponse({'CODE':1, 'MESSAGE':'Asignado Correctamente.', 'DATA':''})
+                return JsonResponse({'CODE':1, 'MESSAGE':'Dotación Asignada Correctamente.', 'DATA':''})
             else:
                 return JsonResponse({'CODE':2, 'MESSAGE':'Maquina asignada anteriormente.', 'DATA':''})
         else:
